@@ -34,10 +34,15 @@ STEP 1:-Create an expo project
 npx create-expo-app 
 cd folder_name
 npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+npx expo start -c -->to start the project 
+
+
 
 Step 2 -
 
  Explore the app.json file
+
+
 
 Step 3:-
 
@@ -69,6 +74,8 @@ const styles = StyleSheet.create({
 });
 
 
+
+
 Step 4:- 
 
 Create a index.jsx file inside the app  --> this is the first file which can run (home page )
@@ -97,6 +104,8 @@ const styles = StyleSheet.create({
 });
 
 
+
+
 STep 5 :-
 
  create a profile page (profile.jsx)
@@ -106,6 +115,9 @@ in index.jsx
 
 import { Link } from "expo-router";
 then add <Link href="./profile" style={{ color: "blue" }}> so that we can directly render to the profile page 
+
+
+
 
 STEP 6:- 
 
@@ -131,3 +143,31 @@ content: [
     presets: ["babel-preset-expo"],
     plugins: ["nativewind/babel"],
   };
+
+
+
+
+STEP 7:-
+
+Add the tailwind extend (font family and all to the tailwind.config.js file)
+add assests files contain all font styles and images 
+
+Add the font you want in your app 
+also load it in the  constants as shown in the file "constants"
+const [fontLoaded, error] = useFonts({
+    "Poppins-Black": require("../assets/fonts/poppins-Black.ttf"),
+  }); --> imoport this font in the _layout.jsx file
+
+
+add the file native_app\constants
+
+DO THIS ALL STUF IN THE _layout 
+-> and if you want to add the style of the font in another file then just declear it like 
+      <Text className="text-3xl font-pbold ">Abhi's Project</Text>
+
+like this 
+
+
+STEP 8:-
+
+
