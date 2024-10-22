@@ -5,8 +5,8 @@ import { Link } from "expo-router";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Hello abhishek you have created your new project!</Text>
+    <View className="flex-1 items-center justify-center bg-white">
+      <Text className="text-3xl">Abhi's Project</Text>
       <StatusBar style="auto" />
       <Link href="./profile" style={{ color: "blue" }}>
         GO to the profile
@@ -14,12 +14,3 @@ export default function App() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

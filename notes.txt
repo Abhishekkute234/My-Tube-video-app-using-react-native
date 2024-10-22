@@ -29,15 +29,19 @@ design using style sheet and tailwind css (We use NAIVEWIND for styling )
 (FOLLOW THE EXPO DOCUMENTATION  FOR MORE INFO)
 
 
-STEP 1:-Creat an expo project 
+STEP 1:-Create an expo project 
 
 npx create-expo-app 
 cd folder_name
 npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
 
-Step 2 - Explore the app.json file
+Step 2 -
 
-Step 3:- change the code of you _layout.jsx code to this code to see hello world
+ Explore the app.json file
+
+Step 3:-
+
+ change the code of you _layout.jsx code to this code to see hello world
 
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
@@ -93,10 +97,37 @@ const styles = StyleSheet.create({
 });
 
 
-STep 5 :- create a profile page (profile.jsx)
+STep 5 :-
+
+ create a profile page (profile.jsx)
 
 add basic syntex to it 
 in index.jsx 
 
 import { Link } from "expo-router";
 then add <Link href="./profile" style={{ color: "blue" }}> so that we can directly render to the profile page 
+
+STEP 6:- 
+
+
+INSTALL A NATIVE WIND from doxumentation Go to nativewind--> Go to quickstart expo
+
+npm install nativewind
+npm install --save-dev tailwindcss@3.3.2
+npx tailwindcss init
+
+A tailwind/config.js is created 
+then COPY the secound content in the documnetation and paste it in origin file
+
+content: [
+    "./app/**/*.{js,jsx,ts,tsx}",                ---> chnage the App to app and add /**/* infront of it 
+    "./<custom directory>/**/*.{js,jsx,ts,tsx}",
+  ],
+
+
+  Now go to the babel.config.js and paste the plugin Here 
+
+   return {
+    presets: ["babel-preset-expo"],
+    plugins: ["nativewind/babel"],
+  };
