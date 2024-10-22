@@ -1,0 +1,102 @@
+color we are using in the website is 
+#d7dfa3 (dark)
+#1a4862  (light )
+
+-> we learn 
+Text ->this component is use to display text in your app and you can add style css to this text 
+View-> its similar to the div which wrap all components  in your app 
+, touchableopacity-> if you want to make button 
+, touchablehighlight ->  if you want to make button with highlight effect 
+, touchablewithoutfeedback->not any visual feedback 
+,activity indicator ->   it is used to show the loading animation 
+, image -> tp display image 
+.imagebackground-> to use image as background 
+, Flatlist -> for long list of items (item sepeartion) .For larger lists with smooth scrolling 
+ , ScrollView -> Hold multilpe components (like a magic box )
+  , SafeAreaView -> use to support screen on differnet devices (border and all can be handel by the this)
+  , TextInput -> to take the input from user 
+  and many more to , to explore it go the react native documnetation
+
+-> ANIMATION using ANIMETABLE 
+design using style sheet and tailwind css (We use NAIVEWIND for styling )
+
+->With react Native you can write the code for both IOS and Android application (not the seperate code base)
+
+->Backend using App write (open source to add Oauth , database , storage and more )
+
+-> real time support  using react native debugger and react native inspector 
+
+(FOLLOW THE EXPO DOCUMENTATION  FOR MORE INFO)
+
+
+STEP 1:-Creat an expo project 
+
+npx create-expo-app 
+cd folder_name
+npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+
+Step 2 - Explore the app.json file
+
+Step 3:- change the code of you _layout.jsx code to this code to see hello world
+
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Slot } from "expo-router";
+
+const RootLayout = () => {
+  return (
+    <>
+      <Text>Header</Text>
+      <Slot />
+      <Text>Footer </Text>
+    </>
+  );
+};
+
+export default RootLayout;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+
+Step 4:- 
+
+Create a index.jsx file inside the app  --> this is the first file which can run (home page )
+
+
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Hello abhishek you have created your new project!</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+
+STep 5 :- create a profile page (profile.jsx)
+
+add basic syntex to it 
+in index.jsx 
+
+import { Link } from "expo-router";
+then add <Link href="./profile" style={{ color: "blue" }}> so that we can directly render to the profile page 
