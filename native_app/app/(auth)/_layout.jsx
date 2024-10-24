@@ -1,11 +1,27 @@
 import React from "react";
+import { Stack } from "expo-router";
 
-import { StyleSheet, Text, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 export default function AuthLayout() {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text>AuthLayout</Text>
-    </View>
+    <>
+      <Stack>
+        <Stack.Screen
+          name="sign-in"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack>
+
+      {/* <Stack
+        screenOptions={{
+          headerShown: false, // Hides the header globally for all screens
+        }}
+      /> */}
+
+      <StatusBar backgroundColor="#161622" style="light" />
+    </>
   );
 }
