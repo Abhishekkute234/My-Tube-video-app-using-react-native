@@ -8,38 +8,23 @@ import {
   Storage,
 } from "react-native-appwrite";
 
-// All the AppWrite configuration details are stored in this object
+// AppWrite configuration details
 export const config = {
-  // The endpoint URL for the AppWrite cloud service
   endpoint: "https://cloud.appwrite.io/v1",
-
-  // The platform identifier for your app (iOS/Android), set based on your package name or app identifier
-  platform: "com.jsm.mytube",
-
-  // Unique ID of the project created on the AppWrite console
   projectId: "6719f229002fe466d342",
-
-  // Unique ID of the database created in AppWrite for storing app data
   databaseId: "6719f512002e66820d9f",
-
-  // ID of the collection in AppWrite used for storing user-related data
   userCollectionId: "6719f56e000cf41be4d4",
-
-  // ID of the collection in AppWrite used for storing video-related data
   videoCollectionId: "6719f5e800397528ff20",
-
-  // Storage bucket ID in AppWrite for storing files (like video files)
   storageId: "6719fa250024b7baf2bb",
 };
 
-// Init your React Native SDK
+// Initialize the AppWrite client
 const client = new Client();
-
 client
-  .setEndpoint(config.endpoint)
-  .setProject(config.projectId)
-  .setPlatform(config.platform);
+  .setEndpoint(config.endpoint) // Set the endpoint
+  .setProject(config.projectId); // Set the project ID
 
+// Initialize AppWrite services
 const account = new Account(client);
 const storage = new Storage(client);
 const avatars = new Avatars(client);
@@ -48,25 +33,23 @@ const databases = new Databases(client);
 // Register user
 export async function createUser(email, password, username) {
   try {
-    const newAccount = await account.create(
+    const newAccount = await account.createEmailSession(
       ID.unique(),
       email,
-      password,
-      username
+      password
     );
 
-    if (!newAccount) throw Error;
+    if (!newAccount) throw new Error("Account creation failed");
 
     const avatarUrl = avatars.getInitials(username);
-
     await signIn(email, password);
 
-    const newUser = await databases.createDocument(
+    newUser = await databases.createDocument(
       config.databaseId,
       config.userCollectionId,
       ID.unique(),
       {
-        accountId: newAccount.$id,
+        userID: newAccount.$id,
         email: email,
         username: username,
         avatar: avatarUrl,
@@ -75,29 +58,30 @@ export async function createUser(email, password, username) {
 
     return newUser;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error creating user:", error);
+    throw new Error(error.message);
   }
 }
 
 // Sign In
 export async function signIn(email, password) {
   try {
-    const session = await account.createEmailSession(email, password);
-
+    // Use the `createSession` function if `createEmailSession` is undefined in your SDK
+    const newAccount = await account.createSession(email, password);
     return session;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error signing in:", error);
+    throw new Error(error.message);
   }
 }
-
 // Get Account
 export async function getAccount() {
   try {
     const currentAccount = await account.get();
-
     return currentAccount;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error fetching account:", error);
+    throw new Error(error.message);
   }
 }
 
@@ -105,19 +89,19 @@ export async function getAccount() {
 export async function getCurrentUser() {
   try {
     const currentAccount = await getAccount();
-    if (!currentAccount) throw Error;
+    if (!currentAccount) throw new Error("No account found");
 
     const currentUser = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
+      config.databaseId,
+      config.userCollectionId,
       [Query.equal("accountId", currentAccount.$id)]
     );
 
-    if (!currentUser) throw Error;
+    if (!currentUser) throw new Error("User not found");
 
     return currentUser.documents[0];
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching current user:", error);
     return null;
   }
 }
@@ -126,10 +110,10 @@ export async function getCurrentUser() {
 export async function signOut() {
   try {
     const session = await account.deleteSession("current");
-
     return session;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error signing out:", error);
+    throw new Error(error.message);
   }
 }
 
@@ -142,7 +126,7 @@ export async function uploadFile(file, type) {
 
   try {
     const uploadedFile = await storage.createFile(
-      appwriteConfig.storageId,
+      config.storageId,
       ID.unique(),
       asset
     );
@@ -150,7 +134,8 @@ export async function uploadFile(file, type) {
     const fileUrl = await getFilePreview(uploadedFile.$id, type);
     return fileUrl;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error uploading file:", error);
+    throw new Error(error.message);
   }
 }
 
@@ -160,10 +145,10 @@ export async function getFilePreview(fileId, type) {
 
   try {
     if (type === "video") {
-      fileUrl = storage.getFileView(appwriteConfig.storageId, fileId);
+      fileUrl = storage.getFileView(config.storageId, fileId);
     } else if (type === "image") {
       fileUrl = storage.getFilePreview(
-        appwriteConfig.storageId,
+        config.storageId,
         fileId,
         2000,
         2000,
@@ -174,11 +159,12 @@ export async function getFilePreview(fileId, type) {
       throw new Error("Invalid file type");
     }
 
-    if (!fileUrl) throw Error;
+    if (!fileUrl) throw new Error("File preview generation failed");
 
     return fileUrl;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error getting file preview:", error);
+    throw new Error(error.message);
   }
 }
 
@@ -191,8 +177,8 @@ export async function createVideoPost(form) {
     ]);
 
     const newPost = await databases.createDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.videoCollectionId,
+      config.databaseId,
+      config.videoCollectionId,
       ID.unique(),
       {
         title: form.title,
@@ -205,7 +191,8 @@ export async function createVideoPost(form) {
 
     return newPost;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error creating video post:", error);
+    throw new Error(error.message);
   }
 }
 
@@ -213,13 +200,14 @@ export async function createVideoPost(form) {
 export async function getAllPosts() {
   try {
     const posts = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.videoCollectionId
+      config.databaseId,
+      config.videoCollectionId
     );
 
     return posts.documents;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error fetching all posts:", error);
+    throw new Error(error.message);
   }
 }
 
@@ -227,14 +215,15 @@ export async function getAllPosts() {
 export async function getUserPosts(userId) {
   try {
     const posts = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.videoCollectionId,
+      config.databaseId,
+      config.videoCollectionId,
       [Query.equal("creator", userId)]
     );
 
     return posts.documents;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error fetching user posts:", error);
+    throw new Error(error.message);
   }
 }
 
@@ -242,8 +231,8 @@ export async function getUserPosts(userId) {
 export async function searchPosts(query) {
   try {
     const posts = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.videoCollectionId,
+      config.databaseId,
+      config.videoCollectionId,
       [Query.search("title", query)]
     );
 
@@ -251,7 +240,8 @@ export async function searchPosts(query) {
 
     return posts.documents;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error searching posts:", error);
+    throw new Error(error.message);
   }
 }
 
@@ -259,13 +249,14 @@ export async function searchPosts(query) {
 export async function getLatestPosts() {
   try {
     const posts = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.videoCollectionId,
+      config.databaseId,
+      config.videoCollectionId,
       [Query.orderDesc("$createdAt"), Query.limit(7)]
     );
 
     return posts.documents;
   } catch (error) {
-    throw new Error(error);
+    console.error("Error fetching latest posts:", error);
+    throw new Error(error.message);
   }
 }
