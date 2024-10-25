@@ -1,101 +1,101 @@
-import React, { useState } from "react"; // Importing React and useState hook
-import { SafeAreaView, ScrollView, Image, View, Text } from "react-native"; // Importing necessary React Native components
-import { images } from "../../constants"; // Importing image assets from constants (assumed to have paths for images)
-import FormField from "../../components/FormField"; // Importing custom FormField component for input fields
-import CustomButton from "../../components/CustomButton"; // Importing custom Button component for form submission
-import { Link } from "expo-router"; // Importing Link from Expo Router for navigation
+import { useState } from "react";
+import { Link, router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
+
+import { images } from "../../constants";
+import { createUser } from "../../lib/appwrite";
+// components/index.js
+import CustomButton from "../../components/CustomButton";
+import FormField from "../../components/FormField";
+// import { useGlobalContext } from "../../context/GlobalProvider";
 
 export default function SignUp() {
-  // Local state to manage the form data (username, email, password)
+  // const { setUser, setIsLogged } = useGlobalContext();
+
+  const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    username: "", // Initial value for username field
-    email: "", // Initial value for email field
-    password: "", // Initial value for password field
+    username: "",
+    email: "",
+    password: "",
   });
 
-  // State to manage loading state during form submission
-  const [isSubmitting, setSubmitting] = useState(false);
-
-  // Function to handle form submission (currently empty, you will need to add your API logic)
   const submit = async () => {
-    setSubmitting(true); // Set the form to loading state when submit is initiated
+    if (form.username === "" || form.email === "" || form.password === "") {
+      Alert.alert("Error", "Please fill in all fields");
+    }
 
+    setSubmitting(true);
     try {
-      // Example: Add your API call or authentication logic here for user signup
-      // await registerUser(form.username, form.email, form.password);
+      const result = await createUser(form.email, form.password, form.username);
+      setUser(result);
+      setIsLogged(true);
 
-      // Simulating an API call delay (remove in actual implementation)
-      setTimeout(() => {
-        setSubmitting(false); // Reset loading state after submission
-        alert("Registration Successful"); // Example success message (remove in real use)
-      }, 1500);
+      router.replace("/home");
     } catch (error) {
-      console.error("Error during signup", error); // Error handling
-      setSubmitting(false); // Reset loading state in case of an error
+      Alert.alert("Error", error.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    // SafeAreaView to ensure content doesn't overlap system UI elements like the status bar
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
-        <View className="w-full justify-center min-h-[85vh] px-4 my-6">
-          {/* Logo Image */}
+        <View
+          className="w-full flex justify-center h-full px-4 my-6"
+          style={{
+            minHeight: Dimensions.get("window").height - 100,
+          }}
+        >
           <Image
-            source={images.logo} // Logo image from constants
-            resizeMode="contain" // Ensures the image maintains its aspect ratio
-            className="w-[115px] h-[35px]" // Styling for the logo size
+            source={images.logo}
+            resizeMode="contain"
+            className="w-[115px] h-[34px]"
           />
 
-          {/* Title for the Sign-Up screen */}
-          <Text className="text-2xl text-white text-semibold mt-10 font-psemibold">
-            SignUp to MyTube
+          <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
+            Sign Up to Aora
           </Text>
 
-          {/* Username Form Field */}
           <FormField
-            title="Username" // Label for the username input
-            value={form.username} // Current value of the username
-            handleChangeText={(e) => setForm({ ...form, username: e })} // Update form state when text is input
-            otherStyles="mt-10" // Adds margin at the top for spacing
+            title="Username"
+            value={form.username}
+            handleChangeText={(e) => setForm({ ...form, username: e })}
+            otherStyles="mt-10"
           />
 
-          {/* Email Form Field */}
           <FormField
-            title="Email" // Label for the email input
-            value={form.email} // Current value of the email
-            handleChangeText={(e) => setForm({ ...form, email: e })} // Update form state when text is input
-            otherStyles="mt-7" // Adds margin at the top for spacing
-            keyboardType="email-address" // Keyboard type optimized for email input
+            title="Email"
+            value={form.email}
+            handleChangeText={(e) => setForm({ ...form, email: e })}
+            otherStyles="mt-7"
+            keyboardType="email-address"
           />
 
-          {/* Password Form Field */}
           <FormField
-            title="Password" // Label for the password input
-            value={form.password} // Current value of the password
-            handleChangeText={(e) => setForm({ ...form, password: e })} // Update form state when text is input
-            otherStyles="mt-7" // Adds margin at the top for spacing
-            secureTextEntry // Hide the text when typing (for passwords)
+            title="Password"
+            value={form.password}
+            handleChangeText={(e) => setForm({ ...form, password: e })}
+            otherStyles="mt-7"
           />
 
-          {/* Sign Up Button */}
           <CustomButton
-            title="Sign Up" // Button label
-            handlePress={submit} // Submit function is called when pressed
-            containerStyles="mt-7" // Adds margin at the top for spacing
-            isLoading={isSubmitting} // Shows a loading spinner if the form is being submitted
+            title="Sign Up"
+            handlePress={submit}
+            containerStyles="mt-7"
+            isLoading={isSubmitting}
           />
 
-          {/* Navigation to SignIn screen for existing users */}
           <View className="flex justify-center pt-5 flex-row gap-2">
             <Text className="text-lg text-gray-100 font-pregular">
-              If you have an account then
+              Have an account already?
             </Text>
             <Link
-              href="/sign-in" // Navigation link to the SignIn screen
+              href="/sign-in"
               className="text-lg font-psemibold text-secondary"
             >
-              SignIn
+              Login
             </Link>
           </View>
         </View>

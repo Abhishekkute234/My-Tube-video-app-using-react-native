@@ -1,0 +1,47 @@
+STEP 6:- 
+
+
+INSTALL A NATIVE WIND from doxumentation Go to nativewind--> Go to quickstart expo
+
+npm install nativewind
+npm install --save-dev tailwindcss@3.3.2
+npx tailwindcss init
+
+A tailwind/config.js is created 
+then COPY the secound content in the documnetation and paste it in origin file
+
+content: [
+    "./app/**/*.{js,jsx,ts,tsx}",                ---> chnage the App to app and add /**/* infront of it 
+    "./<custom directory>/**/*.{js,jsx,ts,tsx}",
+  ],
+
+
+  Now go to the babel.config.js and paste the plugin Here 
+
+   return {
+    presets: ["babel-preset-expo"],
+    plugins: ["nativewind/babel"],
+  };
+
+
+
+
+STEP 7:-
+
+Add the tailwind extend (font family and all to the tailwind.config.js file)
+add assests files contain all font styles and images 
+
+Add the font you want in your app 
+also load it in the  constants as shown in the file "constants"
+const [fontLoaded, error] = useFonts({
+    "Poppins-Black": require("../assets/fonts/poppins-Black.ttf"),
+  }); --> imoport this font in the _layout.jsx file
+
+
+add the file native_app\constants
+
+DO THIS ALL STUF IN THE _layout 
+-> and if you want to add the style of the font in another file then just declear it like 
+      <Text className="text-3xl font-pbold ">Abhi's Project</Text>
+
+like this 

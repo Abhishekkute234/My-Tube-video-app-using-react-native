@@ -1,0 +1,87 @@
+STEP 1:-Create an expo project 
+
+npx create-expo-app 
+cd folder_name
+npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+npx expo start -c -->to start the project 
+
+
+
+Step 2 -
+
+Explore the app.json file
+
+
+Step 3:-
+
+change the code of you _layout.jsx code to this code to see hello world
+
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Slot } from "expo-router";
+
+const RootLayout = () => {
+  return (
+    <>
+      <Text>Header</Text>
+      <Slot />
+      <Text>Footer </Text>
+    </>
+  );
+};
+
+export default RootLayout;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+
+
+
+Step 4:- 
+
+Create a index.jsx file inside the app  --> this is the first file which can run (home page )
+
+
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text>Hello abhishek you have created your new project!</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+
+
+
+STep 5 :-
+
+ create a profile page (profile.jsx)
+
+add basic syntex to it 
+in index.jsx 
+
+import { Link } from "expo-router";
+then add <Link href="./profile" style={{ color: "blue" }}> so that we can directly render to the profile page 
+
+
