@@ -1,0 +1,29 @@
+-> we learn 
+
+
+Text ->this component is use to display text in your app and you can add style css to this text 
+,view-> its similar to the div which wrap all components  in your app 
+, touchableopacity-> if you want to make button 
+, touchablehighlight ->  if you want to make button with highlight effect 
+, touchablewithoutfeedback->not any visual feedback 
+,activity indicator ->   it is used to show the loading animation 
+, image -> tp display image 
+.imagebackground-> to use image as background 
+, Flatlist -> for long list of items (item sepeartion) .For larger lists with smooth scrolling 
+ , ScrollView -> Hold multilpe components (like a magic box )
+  , SafeAreaView -> use to support screen on differnet devices (border and all can be handel by the this)
+  , TextInput -> to take the input from user 
+  and many more to , to explore it go the react native documnetation
+
+
+-> ANIMATION using ANIMETABLE 
+design using style sheet and tailwind css (We use NAIVEWIND for styling )
+
+->With react Native you can write the code for both IOS and Android application (not the seperate code base)
+
+->Backend using App write (open source to add Oauth , database , storage and more )
+
+-> real time support  using react native debugger and react native inspector 
+
+(FOLLOW THE EXPO DOCUMENTATION  FOR MORE INFO)
+

@@ -4,12 +4,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
 
 import { images } from "../../constants";
-import CustomButton from "../../components/CustomButton";
-import FormField from "../../components/FormField";
+import { CustomButton, FormField } from "../../components";
 import { getCurrentUser, signIn } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
-export default function SignIn() {
+const SignIn = () => {
   const { setUser, setIsLogged } = useGlobalContext();
   const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
@@ -31,9 +30,10 @@ export default function SignIn() {
       setIsLogged(true);
 
       Alert.alert("Success", "User signed in successfully");
-      router.replace("/home");
+      // router.replace("/home");
     } catch (error) {
       Alert.alert("Error", error.message);
+      router.replace("/home");
     } finally {
       setSubmitting(false);
     }
@@ -95,4 +95,6 @@ export default function SignIn() {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
+
+export default SignIn;

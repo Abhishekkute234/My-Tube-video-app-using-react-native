@@ -1,0 +1,71 @@
+STEP  11:-
+
+  AUTH sign-in and SIGN up
+explore sign in and sign out page in the auth 
+
+
+STEP 12 :- 
+
+APP WRITTER frameworks
+
+Add Authentication, Databases, Functions, Storage, and Messaging to your projects using the frameworks and languages of your choice.  
+
+-> GO TO THE CONSOLE 
+-> follow the steps  to create a new project on appwritter
+-> go to the app.json -> put the package in the file so same to same you added to the appwritter
+"ios": {
+      "supportsTablet": true,
+      "package":"com.jsm.mytube"
+    },
+
+
+also paste it under 
+"android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package":"com.jsm.mytube" --> here 
+
+    },
+
+
+create a lib folder 
+create a file appwrite.js inside the lib folder 
+add the in it 
+
+Create a database in the  appwrite dashboard 
+copy the id and paste it in the  appwrite.js file (lib)
+IN DATABASE 
+create a collection under database name user and
+ copy its id and paste it in the appwriter.js
+
+IN DATABASE 
+
+ create a collection under database name videos and
+ copy its id and paste it in the appwriter.js
+
+Step  13 :- 
+
+Add the attribuites under the user user, email , avavtor , accountid
+Go the the setting and go to the permissions and and add select all (create ,read update , delete )
+
+Go to the videos sections and create an attributes for it 
+(to see the attribute go to the attributes section in the videos collections)
+
+
+Choose the attributes realation for the last attribute  
+relation between the user and the video 
+one creator can create a many videos 
+
+
+Step  14 :- 
+Storage 
+--> create a bucket in the stoarge (files)
+->> add the Stoarage it to the appwriter(lib)
+->> goto the setting and upadte the permissions for the users (create ,read update , delete )
+--> add roll -->guest -> give the only permisson of read
+--> Allowed file Extensions jps,mp4 etc
+
+Start connecting our app write client  to the appwrite server 
+craete users , upload videos to the files  bucket , make relations between them 

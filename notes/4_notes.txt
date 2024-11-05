@@ -1,0 +1,23 @@
+STEP 8:-
+
+FILE AND FOLDER STRUCTURE 
+
+For AUTH screen 
+create a (auth) folder in the app folder {allowing you to add additional pages in your screen }
+Craete _layout.jsx inside the (auth ) folder 
+
+
+Create a (tab ) folder to handel all tabs
+create a search folder and a [query ] file inside to  handel all search query
+
+
+STEP  9:- 
+
+HANDEL NAVIAGTIONS OF ALL FILES (form one tab to another )
+now go to the tabs/_layout and see the code 
+
+STEP 10 :- 
+
+index.jsx is our 1st screen 
+(auth) sign in , sign out 2nd 
+(tabs)  3rd  screen 
